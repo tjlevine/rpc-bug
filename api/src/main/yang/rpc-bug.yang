@@ -6,4 +6,9 @@ module rpc-bug {
     revision "2015-01-05" {
         description "Initial revision of rpc-bug model";
     }
+
+    rpc noop {
+        input {}
+        output {}
+    }
 }
