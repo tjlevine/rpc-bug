@@ -8,6 +8,7 @@
 package org.opendaylight.impl;
 
 import java.util.concurrent.Future;
+import okhttp3.OkHttpClient;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.sal.binding.api.RpcProviderRegistry;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.rpc.bug.rev150105.NoopInput;
@@ -32,6 +33,10 @@ public class RpcBugProvider {
             public Future<RpcResult<NoopOutput>> noop(NoopInput input) {
 
                 return RpcResultBuilder.<NoopOutput>success().buildFuture();
+            }
+
+            private void notCalled() {
+                new OkHttpClient();
             }
         });
     }
