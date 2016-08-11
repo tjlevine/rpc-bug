@@ -7,7 +7,14 @@
  */
 package org.opendaylight.impl;
 
+import java.util.concurrent.Future;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
+import org.opendaylight.controller.sal.binding.api.RpcProviderRegistry;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.rpc.bug.rev150105.NoopInput;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.rpc.bug.rev150105.NoopOutput;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.rpc.bug.rev150105.RpcBugService;
+import org.opendaylight.yangtools.yang.common.RpcResult;
+import org.opendaylight.yangtools.yang.common.RpcResultBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,8 +24,16 @@ public class RpcBugProvider {
 
     private final DataBroker dataBroker;
 
-    public RpcBugProvider(final DataBroker dataBroker) {
+    public RpcBugProvider(final DataBroker dataBroker, final RpcProviderRegistry rpcProviderRegistry) {
         this.dataBroker = dataBroker;
+
+        rpcProviderRegistry.addRpcImplementation(RpcBugService.class, new RpcBugService() {
+            @Override
+            public Future<RpcResult<NoopOutput>> noop(NoopInput input) {
+
+                return RpcResultBuilder.<NoopOutput>success().buildFuture();
+            }
+        });
     }
 
     /**
