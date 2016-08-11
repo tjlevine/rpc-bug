@@ -7,6 +7,7 @@
  */
 package org.opendaylight.impl;
 
+import com.google.gson.GsonBuilder;
 import java.util.concurrent.Future;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.sal.binding.api.RpcProviderRegistry;
@@ -32,6 +33,10 @@ public class RpcBugProvider {
             public Future<RpcResult<NoopOutput>> noop(NoopInput input) {
 
                 return RpcResultBuilder.<NoopOutput>success().buildFuture();
+            }
+
+            private void notCalled() {
+                new GsonBuilder();
             }
         });
     }
