@@ -8,6 +8,7 @@
 package org.opendaylight.impl;
 
 import java.util.concurrent.Future;
+import org.apache.http.client.fluent.Request;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.sal.binding.api.RpcProviderRegistry;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.rpc.bug.rev150105.NoopInput;
@@ -30,8 +31,11 @@ public class RpcBugProvider {
         rpcProviderRegistry.addRpcImplementation(RpcBugService.class, new RpcBugService() {
             @Override
             public Future<RpcResult<NoopOutput>> noop(NoopInput input) {
-
                 return RpcResultBuilder.<NoopOutput>success().buildFuture();
+            }
+
+            private void notCalled() {
+                Request.Get("http://google.com");
             }
         });
     }
