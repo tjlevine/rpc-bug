@@ -54,7 +54,7 @@ public class RpcBugIT extends AbstractMdsalTestBase {
     }
 
     @Test
-    public void testrpc-bugFeatureLoad() {
+    public void testrpcbugFeatureLoad() {
         Assert.assertTrue(true);
     }
 }
